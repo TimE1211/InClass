@@ -1,9 +1,14 @@
 import PerfectLib
 import PerfectHTTP
 import PerfectHTTPServer
+import PerfectRequestLogger
 
 
 let server = HTTPServer()
+
+let logger = RequestLogger()
+server.setRequestFilters([(logger, .high)])
+server.setResponseFilters([(logger, .low)])
 
 var routes = Routes()     //object to store each route/endpoint
 
