@@ -3,7 +3,6 @@ import PerfectHTTP
 import PerfectHTTPServer
 import PerfectRequestLogger
 
-
 let server = HTTPServer()
 
 let logger = RequestLogger()
