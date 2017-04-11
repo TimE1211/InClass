@@ -2,6 +2,9 @@ import PerfectLib
 import PerfectHTTP
 import PerfectHTTPServer
 import PerfectRequestLogger
+import SQLiteStORM
+
+let connect = SQLiteConnect("./scoresdb")   //      ./=current folder       db = database 
 
 let server = HTTPServer()
 
