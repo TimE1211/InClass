@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import CoreData
 
 let kToDosKey = "todos"
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate
 {
-  var toDos = [ToDo]()
+  var toDos = [ToDoCD]()
+  let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
   @IBOutlet weak var tableView: UITableView!
 
   override func viewDidLoad()
@@ -22,6 +24,19 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 //    let anotherToDo = ToDo(title: "walk the dog", category: "exercise", done: true)
 //    toDos.append(aToDo)
 //    toDos.append(anotherToDo)
+    
+    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ToDoCD")
+    do
+    {
+      if let fetchResults = try context.fetch(fetchRequest) as? [ToDoCD]
+      {
+        toDos = fetchResults
+      }
+    }
+    catch {
+      let nserror = error as NSError
+      NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
+    }
   }
 
   override func didReceiveMemoryWarning()
@@ -44,7 +59,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     cell.titleLabel.text =   aToDo.title
     cell.categoryLabel.text = aToDo.category
     
-    if aToDo.isDone
+    if aToDo.done
     {
       cell.accessoryType = .checkmark
     }
@@ -66,42 +81,42 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     if let selectedCell = tableView.cellForRow(at: indexPath)
     {
       let selectedToDo = toDos[indexPath.row]
-      if selectedToDo.isDone
+      if selectedToDo.done
       {
-        selectedToDo.isDone = false
+        selectedToDo.done = false
         selectedCell.accessoryType = .none
       }
       else
       {
-        selectedToDo.isDone = true
+        selectedToDo.done = true
         selectedCell.accessoryType = .checkmark
       }
     }
   }
   
-  func saveToDos()
-  {
-    let toDoData = NSKeyedArchiver.archivedData(withRootObject: toDos)
-    let defaults = UserDefaults.standard        //singleton -> one  unique object(standard object)
-    defaults.set(toDoData, forKey: kToDosKey)
-    defaults.synchronize()
-  }
-  
-  func loadToDos()
-  {
-    if toDos.count == 0
-    {
-      let defaults = UserDefaults.standard
-      if let toDoData = defaults.object(forKey: kToDosKey) as? Data
-      {
-        if let savedToDos = NSKeyedUnarchiver.unarchiveObject(with: toDoData) as? [ToDo]
-        {
-          toDos = savedToDos
-          tableView.reloadData()
-        }
-      }
-    }
-  }
+//  func saveToDos()
+//  {
+//    let toDoData = NSKeyedArchiver.archivedData(withRootObject: toDos)
+//    let defaults = UserDefaults.standard        //singleton -> one  unique object(standard object)
+//    defaults.set(toDoData, forKey: kToDosKey)
+//    defaults.synchronize()
+//  }
+//  
+//  func loadToDos()
+//  {
+//    if toDos.count == 0
+//    {
+//      let defaults = UserDefaults.standard
+//      if let toDoData = defaults.object(forKey: kToDosKey) as? Data
+//      {
+//        if let savedToDos = NSKeyedUnarchiver.unarchiveObject(with: toDoData) as? [ToDoCD]
+//        {
+//          toDos = savedToDos
+//          tableView.reloadData()
+//        }
+//      }
+//    }
+//  }
 }
 
 

@@ -14,6 +14,7 @@
 		20751DC01EA64977003C801D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20751DBF1EA64977003C801D /* ViewController.swift */; };
 		20751DC21EA64980003C801D /* ToDo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20751DC11EA64980003C801D /* ToDo.swift */; };
 		20751DC41EA64D47003C801D /* ToDoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20751DC31EA64D47003C801D /* ToDoCell.swift */; };
+		20751DC71EA6657A003C801D /* ToDo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 20751DC51EA6657A003C801D /* ToDo.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		20751DBF1EA64977003C801D /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		20751DC11EA64980003C801D /* ToDo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToDo.swift; sourceTree = "<group>"; };
 		20751DC31EA64D47003C801D /* ToDoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToDoCell.swift; sourceTree = "<group>"; };
+		20751DC61EA6657A003C801D /* ToDo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ToDo.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 			isa = PBXGroup;
 			children = (
 				20751DAD1EA646EA003C801D /* AppDelegate.swift */,
+				20751DC51EA6657A003C801D /* ToDo.xcdatamodeld */,
 				20751DBF1EA64977003C801D /* ViewController.swift */,
 				20751DC11EA64980003C801D /* ToDo.swift */,
 				20751DB11EA646EA003C801D /* Main.storyboard */,
@@ -147,6 +150,7 @@
 				20751DC01EA64977003C801D /* ViewController.swift in Sources */,
 				20751DAE1EA646EA003C801D /* AppDelegate.swift in Sources */,
 				20751DC41EA64D47003C801D /* ToDoCell.swift in Sources */,
+				20751DC71EA6657A003C801D /* ToDo.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -312,6 +316,19 @@
 			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		20751DC51EA6657A003C801D /* ToDo.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				20751DC61EA6657A003C801D /* ToDo.xcdatamodel */,
+			);
+			currentVersion = 20751DC61EA6657A003C801D /* ToDo.xcdatamodel */;
+			path = ToDo.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 20751DA21EA646EA003C801D /* Project object */;
 }
