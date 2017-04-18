@@ -5,6 +5,7 @@
 //  Created by Timothy Hang on 4/11/17.
 //
 //
+//if score exists dont save it again?
 
 import StORM
 import SQLiteStORM
