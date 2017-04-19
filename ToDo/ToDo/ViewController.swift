@@ -20,10 +20,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
   override func viewDidLoad()
   {
     super.viewDidLoad()
-//    let aToDo = ToDo(title: "take out trash", category: "chores", done: false)
-//    let anotherToDo = ToDo(title: "walk the dog", category: "exercise", done: true)
-//    toDos.append(aToDo)
-//    toDos.append(anotherToDo)
+    
+    editButtonItem = 
     
     let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ToDoCD")
     do
@@ -56,8 +54,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoCell", for: indexPath) as! ToDoCell
     
     let aToDo = toDos[indexPath.row]
-    cell.titleLabel.text =   aToDo.title
-    cell.categoryLabel.text = aToDo.category
+    cell.titleTextField.text =   aToDo.title
+    cell.categoryTextField.text = aToDo.category
     
     if aToDo.done
     {

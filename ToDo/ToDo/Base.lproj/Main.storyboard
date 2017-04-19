@@ -6,13 +6,13 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="ToDo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
@@ -33,29 +33,33 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ToDo Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4s7-i2-Sfj">
-                                                    <rect key="frame" x="15" y="0.0" width="78" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="ToDo Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="L2w-gZ-4TH">
+                                                    <rect key="frame" x="15" y="0.0" width="188" height="22"/>
                                                     <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Category" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tAh-FG-Son">
-                                                    <rect key="frame" x="15" y="26.5" width="59.5" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Category" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="m2K-44-yMf">
+                                                    <rect key="frame" x="15" y="22" width="188" height="22"/>
                                                     <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="tAh-FG-Son" secondAttribute="bottom" id="3ZL-3h-t1H"/>
-                                                <constraint firstItem="4s7-i2-Sfj" firstAttribute="leading" secondItem="Meb-hm-mnN" secondAttribute="leading" constant="15" id="U8i-eK-uAg"/>
-                                                <constraint firstItem="tAh-FG-Son" firstAttribute="leading" secondItem="4s7-i2-Sfj" secondAttribute="leading" id="UvV-AH-pel"/>
-                                                <constraint firstItem="4s7-i2-Sfj" firstAttribute="top" secondItem="Meb-hm-mnN" secondAttribute="top" id="cMf-eb-yMW"/>
+                                                <constraint firstItem="m2K-44-yMf" firstAttribute="height" secondItem="L2w-gZ-4TH" secondAttribute="height" id="6dH-X0-PsC"/>
+                                                <constraint firstItem="L2w-gZ-4TH" firstAttribute="width" secondItem="Meb-hm-mnN" secondAttribute="width" multiplier="0.5" id="Bh9-IJ-7P1"/>
+                                                <constraint firstItem="L2w-gZ-4TH" firstAttribute="leading" secondItem="Meb-hm-mnN" secondAttribute="leading" constant="15" id="LAy-cH-yDh"/>
+                                                <constraint firstItem="m2K-44-yMf" firstAttribute="top" secondItem="L2w-gZ-4TH" secondAttribute="bottom" id="S0w-g4-dvS"/>
+                                                <constraint firstItem="L2w-gZ-4TH" firstAttribute="height" secondItem="Meb-hm-mnN" secondAttribute="height" multiplier="0.5" id="UMI-6z-Xjs"/>
+                                                <constraint firstItem="m2K-44-yMf" firstAttribute="width" secondItem="L2w-gZ-4TH" secondAttribute="width" id="gh4-MU-9TH"/>
+                                                <constraint firstItem="L2w-gZ-4TH" firstAttribute="top" secondItem="Meb-hm-mnN" secondAttribute="top" id="paM-Rf-EWd"/>
+                                                <constraint firstItem="m2K-44-yMf" firstAttribute="leading" secondItem="L2w-gZ-4TH" secondAttribute="leading" id="vIe-5c-eQL"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="categoryLabel" destination="tAh-FG-Son" id="jWa-Sv-Gva"/>
-                                            <outlet property="titleLabel" destination="4s7-i2-Sfj" id="3OL-78-7ga"/>
+                                            <outlet property="categoryTextField" destination="m2K-44-yMf" id="C4m-Le-AhW"/>
+                                            <outlet property="titleTextField" destination="L2w-gZ-4TH" id="E24-l8-jf3"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -88,6 +92,7 @@
                         <outlet property="tableView" destination="NVr-2D-hUN" id="w2y-V3-HXK"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
         </scene>
     </scenes>
