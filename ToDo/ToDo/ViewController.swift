@@ -11,7 +11,7 @@ import CoreData
 
 let kToDosKey = "todos"
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate
 {
   var toDos = [ToDoCD]()
   let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -21,7 +21,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
   {
     super.viewDidLoad()
     
-    editButtonItem = 
+    navigationItem.rightBarButtonItem = editButtonItem
     
     let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ToDoCD")
     do
@@ -42,6 +42,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     super.didReceiveMemoryWarning()
   }
   
+  override func setEditing(_ editing: Bool, animated: Bool)
+  {
+    super.setEditing(editing, animated: animated)
+    tableView.setEditing(editing, animated: animated)
+    
+    if !editing
+    {
+      (UIApplication.shared.delegate as! AppDelegate).saveContext()
+    }
+  }
+  
   // MARK: - Table view data source
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
@@ -54,8 +65,28 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoCell", for: indexPath) as! ToDoCell
     
     let aToDo = toDos[indexPath.row]
-    cell.titleTextField.text =   aToDo.title
-    cell.categoryTextField.text = aToDo.category
+    
+    if tableView.isEditing
+    {
+      cell.titleTextField.isEnabled = true
+      cell.categoryTextField.isEnabled = true
+    }
+    else
+    {
+      cell.titleTextField.isEnabled = false
+      cell.categoryTextField.isEnabled = false
+    }
+    
+    if let title = aToDo.title,
+      let category = aToDo.category
+    {
+      cell.titleTextField.text = title
+      cell.categoryTextField.text = category
+    }
+    else
+    {
+      cell.titleTextField.becomeFirstResponder()
+    }
     
     if aToDo.done
     {
@@ -73,7 +104,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
   {
-//    tableView.cellForRow(at: indexPath)?.accessoryType = .none
     tableView.deselectRow(at: indexPath, animated: true)
     
     if let selectedCell = tableView.cellForRow(at: indexPath)
@@ -92,29 +122,49 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
   }
   
-//  func saveToDos()
-//  {
-//    let toDoData = NSKeyedArchiver.archivedData(withRootObject: toDos)
-//    let defaults = UserDefaults.standard        //singleton -> one  unique object(standard object)
-//    defaults.set(toDoData, forKey: kToDosKey)
-//    defaults.synchronize()
-//  }
-//  
-//  func loadToDos()
-//  {
-//    if toDos.count == 0
-//    {
-//      let defaults = UserDefaults.standard
-//      if let toDoData = defaults.object(forKey: kToDosKey) as? Data
-//      {
-//        if let savedToDos = NSKeyedUnarchiver.unarchiveObject(with: toDoData) as? [ToDoCD]
-//        {
-//          toDos = savedToDos
-//          tableView.reloadData()
-//        }
-//      }
-//    }
-//  }
+  func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath)
+  {
+    if editingStyle == .delete
+    {
+      let toDoToDelete = toDos[indexPath.row]
+      context.delete(toDoToDelete)
+      toDos.remove(at: indexPath.row)
+      tableView.deleteRows(at: [indexPath], with: .automatic)
+    }
+  }
+  
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool
+  {
+    if let contentView = textField.superview,
+      let cell = contentView.superview as? ToDoCell,
+      let indexPath = tableView.indexPath(for: cell)
+      {
+        let selectedToDo = toDos[indexPath.row]
+        if textField.text != ""
+        {
+          if textField == cell.titleTextField
+          {
+            selectedToDo.title = textField.text
+            cell.categoryTextField.becomeFirstResponder()
+          }
+          else if textField == cell.categoryTextField
+          {
+            selectedToDo.category = textField.text
+            cell.categoryTextField.resignFirstResponder()
+          }
+        }
+      }
+    return false
+  }
+
+  @IBAction func addNewToDo(sender: UIBarButtonItem)
+  {
+    let aToDo = NSEntityDescription.insertNewObject(forEntityName: "ToDoCD", into: context) as! ToDoCD
+    toDos.append(aToDo)
+    setEditing(true, animated: true)
+    tableView.reloadData()
+  }
+  
 }
 
 

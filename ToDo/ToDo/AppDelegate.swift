@@ -32,6 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
   {
 //    let vc = window?.rootViewController as! ViewController
 //    vc.saveToDos()
+    (UIApplication.shared.delegate as! AppDelegate).saveContext()
   }
 
   func applicationWillEnterForeground(_ application: UIApplication)
