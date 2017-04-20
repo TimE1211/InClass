@@ -9,8 +9,6 @@
 import UIKit
 import CoreData
 
-let kToDosKey = "todos"
-
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate
 {
   var toDos = [ToDoCD]()
