@@ -7,12 +7,14 @@
 //
 
 import UIKit
-import CoreData
+import RealmSwift
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate
 {
-  var toDos = [ToDoCD]()
-  let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+  var toDos: Results<ToDo>!
+  
+  var realm: Realm!
+  
   @IBOutlet weak var tableView: UITableView!
 
   override func viewDidLoad()
@@ -21,34 +23,19 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     navigationItem.rightBarButtonItem = editButtonItem
     
-    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ToDoCD")
-    do
-    {
-      if let fetchResults = try context.fetch(fetchRequest) as? [ToDoCD]
-      {
-        toDos = fetchResults
-      }
-    }
-    catch {
-      let nserror = error as NSError
-      NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
-    }
+    realm = try! Realm()
+    toDos = realm.objects(ToDo.self)
   }
 
   override func didReceiveMemoryWarning()
   {
     super.didReceiveMemoryWarning()
   }
-  
+
   override func setEditing(_ editing: Bool, animated: Bool)
   {
     super.setEditing(editing, animated: animated)
     tableView.setEditing(editing, animated: animated)
-    
-    if !editing
-    {
-      (UIApplication.shared.delegate as! AppDelegate).saveContext()
-    }
   }
   
   // MARK: - Table view data source
@@ -75,18 +62,19 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
       cell.categoryTextField.isEnabled = false
     }
     
-    if let title = aToDo.title,
-      let category = aToDo.category
-    {
-      cell.titleTextField.text = title
-      cell.categoryTextField.text = category
-    }
-    else
+    cell.titleTextField.text = aToDo.title
+    cell.categoryTextField.text = aToDo.category
+    
+    if aToDo.title == ""
     {
       cell.titleTextField.becomeFirstResponder()
     }
+    else if aToDo.category == ""
+    {
+      cell.categoryTextField.becomeFirstResponder()
+    }
     
-    if aToDo.done
+    if aToDo.isDone
     {
       cell.accessoryType = .checkmark
     }
@@ -94,7 +82,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     {
       cell.accessoryType = .none
     }
-    
     return cell
   }
   
@@ -107,14 +94,18 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     if let selectedCell = tableView.cellForRow(at: indexPath)
     {
       let selectedToDo = toDos[indexPath.row]
-      if selectedToDo.done
+      if selectedToDo.isDone
       {
-        selectedToDo.done = false
+        try! realm.write {
+          selectedToDo.isDone = false
+        }
         selectedCell.accessoryType = .none
       }
       else
       {
-        selectedToDo.done = true
+        try! realm.write {
+          selectedToDo.isDone = true
+        }
         selectedCell.accessoryType = .checkmark
       }
     }
@@ -124,9 +115,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
   {
     if editingStyle == .delete
     {
-      let toDoToDelete = toDos[indexPath.row]
-      context.delete(toDoToDelete)
-      toDos.remove(at: indexPath.row)
+      try! realm.write {
+        let toDoToDelete = toDos[indexPath.row]
+        self.realm.delete(toDoToDelete)
+      }
       tableView.deleteRows(at: [indexPath], with: .automatic)
     }
   }
@@ -138,16 +130,21 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
       let indexPath = tableView.indexPath(for: cell)
       {
         let selectedToDo = toDos[indexPath.row]
-        if textField.text != ""
+        if let text = textField.text,
+          text != ""
         {
           if textField == cell.titleTextField
           {
-            selectedToDo.title = textField.text
+            try! realm.write {
+              selectedToDo.title = text
+            }
             cell.categoryTextField.becomeFirstResponder()
           }
           else if textField == cell.categoryTextField
           {
-            selectedToDo.category = textField.text
+            try! realm.write {
+              selectedToDo.category = text
+            }
             cell.categoryTextField.resignFirstResponder()
           }
         }
@@ -157,12 +154,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
   @IBAction func addNewToDo(sender: UIBarButtonItem)
   {
-    let aToDo = NSEntityDescription.insertNewObject(forEntityName: "ToDoCD", into: context) as! ToDoCD
-    toDos.append(aToDo)
+    let aToDo = ToDo(title: "", category: "", done: false)
+    try! realm.write {
+      realm.add(aToDo)
+    }
     setEditing(true, animated: true)
     tableView.reloadData()
   }
-  
 }
 
 

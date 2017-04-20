@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate
@@ -30,55 +29,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate
 
   func applicationDidEnterBackground(_ application: UIApplication)
   {
-//    let vc = window?.rootViewController as! ViewController
-//    vc.saveToDos()
-    (UIApplication.shared.delegate as! AppDelegate).saveContext()
+
   }
 
   func applicationWillEnterForeground(_ application: UIApplication)
   {
-    // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+
   }
 
   func applicationDidBecomeActive(_ application: UIApplication)
   {
-//    let vc = window?.rootViewController as! ViewController
-//    vc.loadToDos()
+
   }
 
   func applicationWillTerminate(_ application: UIApplication)
   {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-  }
-
-  //MARK: - Core Data stack
-  lazy var persistentContainer: NSPersistentContainer = {   //intentionally causing a crash
-    let container = NSPersistentContainer(name: "ToDo")
-    container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-      if let error = error as NSError?
-        {
-        fatalError("Unresolved error \(error), \(error.userInfo)")
-    }
-    })
-    
-    return container
-  }()
-
-  func saveContext()
-  {
-    let context = persistentContainer.viewContext
-    if context.hasChanges
-    {
-      do
-      {
-        try context.save()
-      }
-      catch
-      {
-        let nserror = error as NSError
-        fatalError("Unresolved error \(error), \(nserror.userInfo)")
-      }
-    }
   }
 }
 
