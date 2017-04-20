@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate
 {
   var toDos: Results<ToDo>!
   
@@ -21,21 +21,19 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
   {
     super.viewDidLoad()
     
-    navigationItem.rightBarButtonItem = editButtonItem
-    
     realm = try! Realm()
     toDos = realm.objects(ToDo.self)
+  }
+  
+  override func viewWillAppear(_ animated: Bool)
+  {
+    super.viewWillAppear(animated)
+    tableView.reloadData()
   }
 
   override func didReceiveMemoryWarning()
   {
     super.didReceiveMemoryWarning()
-  }
-
-  override func setEditing(_ editing: Bool, animated: Bool)
-  {
-    super.setEditing(editing, animated: animated)
-    tableView.setEditing(editing, animated: animated)
   }
   
   // MARK: - Table view data source
@@ -51,29 +49,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     let aToDo = toDos[indexPath.row]
     
-    if tableView.isEditing
-    {
-      cell.titleTextField.isEnabled = true
-      cell.categoryTextField.isEnabled = true
-    }
-    else
-    {
-      cell.titleTextField.isEnabled = false
-      cell.categoryTextField.isEnabled = false
-    }
-    
     cell.titleTextField.text = aToDo.title
     cell.categoryTextField.text = aToDo.category
-    
-    if aToDo.title == ""
-    {
-      cell.titleTextField.becomeFirstResponder()
-    }
-    else if aToDo.category == ""
-    {
-      cell.categoryTextField.becomeFirstResponder()
-    }
-    
+
     if aToDo.isDone
     {
       cell.accessoryType = .checkmark
@@ -121,45 +99,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
       }
       tableView.deleteRows(at: [indexPath], with: .automatic)
     }
-  }
-  
-  func textFieldShouldReturn(_ textField: UITextField) -> Bool
-  {
-    if let contentView = textField.superview,
-      let cell = contentView.superview as? ToDoCell,
-      let indexPath = tableView.indexPath(for: cell)
-      {
-        let selectedToDo = toDos[indexPath.row]
-        if let text = textField.text,
-          text != ""
-        {
-          if textField == cell.titleTextField
-          {
-            try! realm.write {
-              selectedToDo.title = text
-            }
-            cell.categoryTextField.becomeFirstResponder()
-          }
-          else if textField == cell.categoryTextField
-          {
-            try! realm.write {
-              selectedToDo.category = text
-            }
-            cell.categoryTextField.resignFirstResponder()
-          }
-        }
-      }
-    return false
-  }
-
-  @IBAction func addNewToDo(sender: UIBarButtonItem)
-  {
-    let aToDo = ToDo(title: "", category: "", done: false)
-    try! realm.write {
-      realm.add(aToDo)
-    }
-    setEditing(true, animated: true)
-    tableView.reloadData()
   }
 }
 
