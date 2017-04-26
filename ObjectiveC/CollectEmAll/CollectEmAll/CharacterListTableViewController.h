@@ -8,8 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol ChosenCharacterDelegate
+
+- (void)characterWasChosen:(NSString *)chosenCharacter;
+
+@end
+
 @interface CharacterListTableViewController : UITableViewController
 
 @property (nonatomic) NSArray *characters;
+@property (nonatomic) id<ChosenCharacterDelegate> delegate;       //id = any
 
 @end

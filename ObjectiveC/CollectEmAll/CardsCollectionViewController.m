@@ -9,8 +9,9 @@
 #import "CardsCollectionViewController.h"
 #import "CardCell.h"
 #import "CharacterListTableViewController.h"
+#import "DetailViewController.h"
 
-@interface CardsCollectionViewController ()
+@interface CardsCollectionViewController() <UIPopoverPresentationControllerDelegate, ChosenCharacterDelegate>
 {
   NSDictionary *allCharacters;
   NSMutableArray *remainingCharacters;
@@ -39,6 +40,10 @@ static NSString * const reuseIdentifier = @"CardCell";
   [remainingCharacters addObjectsFromArray:[allCharacters allKeys]];
   
   visibleCharacters = [[NSMutableArray alloc] init];
+  
+  self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+  
+  //even though button on detail view it goes here
 }
 
 - (void)didReceiveMemoryWarning
@@ -56,9 +61,40 @@ static NSString * const reuseIdentifier = @"CardCell";
   {
     CharacterListTableViewController *characterListVC = [segue destinationViewController];
     characterListVC.characters = remainingCharacters;
+    characterListVC.popoverPresentationController.delegate = self;
+    characterListVC.delegate = self;
+    CGFloat contentHeight = 44.0f * remainingCharacters.count;
+    characterListVC.preferredContentSize = CGSizeMake(200.0f, contentHeight);
+  }
+  else if ([segue.identifier isEqualToString:@"ShowCharacterDetailSegue"])
+  {
+    DetailViewController *detailVC = [segue destinationViewController];
+    CardCell *cell = (CardCell *)sender;
+    NSIndexPath *indexPath = [self.collectionView indexPathForCell:cell];
+    NSString *character = visibleCharacters[indexPath.row];
+    detailVC.characterName = character;
+    detailVC.characterImageName = allCharacters[character];
   }
 }
 
+- (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller
+{
+  return UIModalPresentationNone;
+}
+
+#pragma mark <ChosenCharacterDelegate>
+
+- (void)characterWasChosen:(NSString *)chosenCharacter
+{
+  [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+  [visibleCharacters addObject:chosenCharacter];
+  [remainingCharacters removeObject:chosenCharacter];
+  if (remainingCharacters.count == 0)
+  {
+    self.navigationItem.rightBarButtonItem.enabled = NO;
+  }
+  [self.collectionView reloadData];
+}
 
 #pragma mark <UICollectionViewDataSource>
 

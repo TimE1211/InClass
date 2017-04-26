@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="RMx-3f-FxP">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="RMx-3f-FxP">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,7 +20,7 @@
         <scene sceneID="pY4-Hu-kfo">
             <objects>
                 <navigationController title="Master" id="RMx-3f-FxP" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" id="Pmd-2v-anx">
+                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="Pmd-2v-anx">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.96999999999999997" green="0.83226000000000011" blue="0.28130000000000005" alpha="1" colorSpace="calibratedRGB"/>
@@ -40,7 +41,7 @@
         <scene sceneID="rVt-Lp-IUI">
             <objects>
                 <collectionViewController id="hJi-y2-MS3" customClass="CardsCollectionViewController" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="KKv-dh-gPk">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="KKv-dh-gPk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.1628" green="0.18186666666666665" blue="0.22" alpha="1" colorSpace="calibratedRGB"/>
@@ -97,7 +98,7 @@
                                 <connections>
                                     <outlet property="ImageView" destination="WUz-Gw-s5z" id="IEY-Gf-FAs"/>
                                     <outlet property="characterNameLabel" destination="fsi-iD-cws" id="IJk-pH-3EI"/>
-                                    <segue destination="JEX-9P-axG" kind="show" id="7kR-rY-jLf"/>
+                                    <segue destination="JEX-9P-axG" kind="show" identifier="ShowCharacterDetailSegue" id="7kR-rY-jLf"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -177,30 +178,64 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Detail view content goes here" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="0XM-y9-sOw">
-                                <rect key="frame" x="20" y="333.5" width="335" height="0.0"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="system" size="system"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2Em-d9-C3I">
+                                <rect key="frame" x="0.0" y="64" width="375" height="281.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="2Em-d9-C3I" secondAttribute="height" multiplier="4:3" id="otj-N8-tIj"/>
+                                </constraints>
+                            </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="klM-G1-R6d">
+                                <rect key="frame" x="8" y="353.5" width="359" height="313.5"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="DistantGalaxy" family="Distant Galaxy" pointSize="19"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.1628" green="0.18186666670000001" blue="0.22" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="0XM-y9-sOw" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leading" constant="20" symbolic="YES" id="Tsc-yG-G1q"/>
-                            <constraint firstItem="0XM-y9-sOw" firstAttribute="centerY" secondItem="svH-Pt-448" secondAttribute="centerY" id="jWN-iV-94e"/>
-                            <constraint firstAttribute="trailing" secondItem="0XM-y9-sOw" secondAttribute="trailing" constant="20" symbolic="YES" id="tHV-ZD-HQj"/>
+                            <constraint firstAttribute="trailing" secondItem="2Em-d9-C3I" secondAttribute="trailing" id="7LE-q9-GYA"/>
+                            <constraint firstItem="2Em-d9-C3I" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leading" id="8gA-Va-Y6I"/>
+                            <constraint firstItem="klM-G1-R6d" firstAttribute="top" secondItem="2Em-d9-C3I" secondAttribute="bottom" constant="8" id="8p3-KB-rBm"/>
+                            <constraint firstAttribute="trailing" secondItem="klM-G1-R6d" secondAttribute="trailing" constant="8" id="GGs-HT-pEk"/>
+                            <constraint firstItem="klM-G1-R6d" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leading" constant="8" id="PrC-Jx-PtE"/>
+                            <constraint firstItem="klM-G1-R6d" firstAttribute="top" secondItem="SYR-Wa-9uf" secondAttribute="bottom" constant="8" id="VIL-iw-nEO"/>
+                            <constraint firstAttribute="trailing" secondItem="klM-G1-R6d" secondAttribute="trailing" id="aIL-EB-UcF"/>
+                            <constraint firstItem="2Em-d9-C3I" firstAttribute="top" secondItem="SYR-Wa-9uf" secondAttribute="bottom" id="czX-we-aeq"/>
+                            <constraint firstItem="GAO-Cl-Wes" firstAttribute="top" secondItem="2Em-d9-C3I" secondAttribute="bottom" id="e1f-Af-m6f"/>
+                            <constraint firstItem="klM-G1-R6d" firstAttribute="leading" secondItem="2Em-d9-C3I" secondAttribute="trailing" id="gbW-1P-Tem"/>
+                            <constraint firstItem="GAO-Cl-Wes" firstAttribute="top" secondItem="klM-G1-R6d" secondAttribute="bottom" id="l4a-Yi-qmp"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="VIL-iw-nEO"/>
+                                <exclude reference="aIL-EB-UcF"/>
+                                <exclude reference="gbW-1P-Tem"/>
+                                <exclude reference="e1f-Af-m6f"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=compact-widthClass=compact">
+                            <mask key="constraints">
+                                <exclude reference="7LE-q9-GYA"/>
+                                <exclude reference="8p3-KB-rBm"/>
+                                <exclude reference="GGs-HT-pEk"/>
+                                <exclude reference="PrC-Jx-PtE"/>
+                                <include reference="VIL-iw-nEO"/>
+                                <include reference="aIL-EB-UcF"/>
+                                <include reference="gbW-1P-Tem"/>
+                                <include reference="e1f-Af-m6f"/>
+                            </mask>
+                        </variation>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Detail" id="mOI-FS-AaM"/>
+                    <navigationItem key="navigationItem" id="mOI-FS-AaM"/>
                     <connections>
-                        <outlet property="detailDescriptionLabel" destination="0XM-y9-sOw" id="deQ-Na-JPF"/>
+                        <outlet property="characterImageView" destination="2Em-d9-C3I" id="h7F-k9-kj5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FJe-Yq-33r" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1465" y="-630"/>
+            <point key="canvasLocation" x="1464.0179910044978" y="-631.20000000000005"/>
         </scene>
     </scenes>
     <color key="tintColor" red="0.1628" green="0.18186666670000001" blue="0.22" alpha="1" colorSpace="calibratedRGB"/>
