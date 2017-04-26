@@ -7,40 +7,31 @@
 //
 
 import Foundation
+import RealmSwift
 
-let kTitleKey = "title"
-let kCategoryKey = "category"
-let kDoneKey = "done"
-
-class ToDo: NSObject, NSCoding
+class ToDo: Object
 {
-  var title: String
-  var category: String
-  var isDone: Bool
+  dynamic var toDoId = UUID().uuidString
   
-  init(title: String, category: String, done: Bool)
+  dynamic var title = ""
+  dynamic var category = ""
+  dynamic var isDone = false
+  
+  override class func primaryKey() -> String?
   {
+    return "toDoId"
+  }
+  
+  override class func indexedProperties() -> [String]
+  {
+    return ["isDone"]
+  }
+  
+  convenience init(title: String, category: String, done: Bool)
+  {
+    self.init()
     self.title = title
     self.category = category
     self.isDone = done
-  }
-  
-  // MARK: - NSCoding
-  
-  required convenience init?(coder aDecoder: NSCoder)
-  {
-    guard let title = aDecoder.decodeObject(forKey: kTitleKey) as? String,
-      let category = aDecoder.decodeObject(forKey: kCategoryKey) as? String else { return nil }
-    
-    let done = aDecoder.decodeBool(forKey: kDoneKey)
-    
-    self.init(title: title, category: category, done: done)
-  }
-  
-  func encode(with aCoder: NSCoder)
-  {
-    aCoder.encode(title, forKey: kTitleKey)
-    aCoder.encode(category, forKey: kCategoryKey)
-    aCoder.encode(isDone, forKey: kDoneKey)
   }
 }
