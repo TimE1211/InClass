@@ -1,0 +1,62 @@
+ [
+  {
+  "phase": "First Quarter",
+  "date": "January 5",
+  "image": "Moon-5",
+  "illumination": 47
+  },
+  {
+  "phase": "Waxing Gibbous",
+  "date": "January 6",
+  "image": "Moon-6",
+  "illumination": 58
+  },
+  {
+  "phase": "Waxing Gibbous",
+  "date": "January 7",
+  "image": "Moon-7",
+  "illumination": 69
+  },
+  {
+  "phase": "Waxing Gibbous",
+  "date": "January 8",
+  "image": "Moon-8",
+  "illumination": 79
+  },
+  {
+  "phase": "Waxing Gibbous",
+  "date": "January 9",
+  "image": "Moon-9",
+  "illumination": 88
+  },
+  {
+  "phase": "Waxing Gibbous",
+  "date": "January 10",
+  "image": "Moon-10",
+  "illumination": 94
+  },
+  {
+  "phase": "Waxing Gibbous",
+  "date": "January 11",
+  "image": "Moon-11",
+  "illumination": 99
+  },
+  {
+  "phase": "Full Moon",
+  "date": "January 12",
+  "image": "Moon-12",
+  "illumination": 100
+  },
+  {
+  "phase": "Waning Gibbous",
+  "date": "January 13",
+  "image": "Moon-13",
+  "illumination": 99
+  },
+  {
+  "phase": "Waning Gibbous",
+  "date": "January 14",
+  "image": "Moon-14",
+  "illumination": 95
+  }
+]
