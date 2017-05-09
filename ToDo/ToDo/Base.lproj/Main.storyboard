@@ -22,8 +22,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GiS-xC-AI1">
+                                <rect key="frame" x="27.5" y="617" width="320" height="50"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="4qp-QU-Kfp"/>
+                                    <constraint firstAttribute="width" constant="320" id="LkI-E1-97X"/>
+                                </constraints>
+                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="NVr-2D-hUN">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="617"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ToDoCell" id="kDB-kK-mIU" customClass="ToDoCell" customModule="ToDo" customModuleProvider="target">
@@ -72,9 +80,11 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="NVr-2D-hUN" secondAttribute="trailing" id="N72-kf-VFw"/>
+                            <constraint firstItem="GiS-xC-AI1" firstAttribute="top" secondItem="NVr-2D-hUN" secondAttribute="bottom" id="Psc-bD-28l"/>
                             <constraint firstItem="NVr-2D-hUN" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="W00-3P-WBU"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="NVr-2D-hUN" secondAttribute="bottom" id="ir0-8z-Si5"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="GiS-xC-AI1" secondAttribute="bottom" id="cfd-H3-50N"/>
                             <constraint firstItem="NVr-2D-hUN" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="uwb-eX-g2t"/>
+                            <constraint firstItem="GiS-xC-AI1" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="wCn-7M-pSY"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="epb-xq-gT2">
@@ -85,6 +95,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="bannerView" destination="GiS-xC-AI1" id="Tv3-TB-pUM"/>
                         <outlet property="tableView" destination="NVr-2D-hUN" id="w2y-V3-HXK"/>
                     </connections>
                 </viewController>

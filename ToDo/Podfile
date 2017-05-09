@@ -1,4 +1,5 @@
 # Uncomment the next line to define a global platform for your project
+# Key ca-app-pub-7535231596532581~7544425753
 platform :ios, '10.3'
 
 target 'ToDo' do
@@ -7,6 +8,8 @@ target 'ToDo' do
 
   # Pods for ToDo
   pod 'RealmSwift'
+  pod 'Firebase/Core'
+  pod 'Firebase/AdMob'
 end
 
 post_install do |installer|

@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import GoogleMobileAds
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate
 {
@@ -17,12 +18,19 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
   
   @IBOutlet weak var tableView: UITableView!
 
+  @IBOutlet weak var bannerView: GADBannerView!
+  
+  
   override func viewDidLoad()
   {
     super.viewDidLoad()
     
     realm = try! Realm()
     toDos = realm.objects(ToDo.self)
+    
+    bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+    bannerView.rootViewController = self
+    bannerView.load(GADRequest())
   }
   
   override func viewWillAppear(_ animated: Bool)
