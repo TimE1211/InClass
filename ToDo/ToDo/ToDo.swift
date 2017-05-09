@@ -27,7 +27,7 @@ class ToDo: Object
     return ["isDone"]
   }
   
-  convenience init(title: String, category: String, done: Bool)
+  convenience init(title: String, category: String, done: Bool, toDoId: String)
   {
     self.init()
     self.title = title
