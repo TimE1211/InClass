@@ -9,7 +9,7 @@ func processSaveScore(request: HTTPRequest, _ response: HTTPResponse)
   
   guard let theScore = Int(request.param(name: "score")!),
     let theUserName = request.param(name: "username"),
-    let theDisplayName = request.param(name: "displayname") else        //like if else statement
+    let theDisplayName = request.param(name: "displayname") else       
   {
     response.status = .badRequest
     responseDictionary["error"] = "Please supply values"
